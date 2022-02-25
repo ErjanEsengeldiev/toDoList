@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:todolist/main_model.dart';
+import 'package:todolist/ui/widgets/groups.dart/widgets/navigation_drawer_widget.dart';
 import 'groups_model_widget.dart';
 
 class Groups extends StatefulWidget {
@@ -21,13 +22,46 @@ class _GroupsState extends State<Groups> {
   }
 }
 
-class GroupWidgetBody extends StatelessWidget {
+class GroupWidgetBody extends StatefulWidget {
   const GroupWidgetBody({Key? key}) : super(key: key);
 
   @override
+  State<GroupWidgetBody> createState() => _GroupWidgetBodyState();
+}
+
+class _GroupWidgetBodyState extends State<GroupWidgetBody> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: const NavigationDrawer(),
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  context
+                      .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                      .model
+                      .changeThemeOfApp();
+                });
+              },
+              icon: Icon(
+                context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Icons.nights_stay_outlined
+                    : Icons.light,
+                color: context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Colors.black
+                    : Colors.white,
+              )),
+        ],
         title: const Text('Группы'),
         centerTitle: true,
       ),

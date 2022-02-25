@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/main_model.dart';
 import 'groups_from_model_widget.dart';
 
 class GroupsFormWidget extends StatefulWidget {
@@ -19,14 +20,47 @@ class _GroupsFormWidgetState extends State<GroupsFormWidget> {
   }
 }
 
-class BodyGroupsFormWidget extends StatelessWidget {
+class BodyGroupsFormWidget extends StatefulWidget {
   const BodyGroupsFormWidget({Key? key}) : super(key: key);
 
+  @override
+  State<BodyGroupsFormWidget> createState() => _BodyGroupsFormWidgetState();
+}
+
+class _BodyGroupsFormWidgetState extends State<BodyGroupsFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New group'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  context
+                      .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                      .model
+                      .changeThemeOfApp();
+                });
+              },
+              icon: Icon(
+                context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Icons.nights_stay_outlined
+                    : Icons.light,
+                color: context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Colors.black
+                    : Colors.white,
+              )),
+        ],
+        title: const Text('Группы'),
+        centerTitle: true,
       ),
       body: const Center(
         child: Padding(

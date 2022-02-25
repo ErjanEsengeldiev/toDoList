@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/main_model.dart';
 import 'package:todolist/ui/widgets/tasks_form/task_form_widget_model.dart';
 
 class TaskFormWidget extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
-  final  groupKey;
+  final groupKey;
   const TaskFormWidget({Key? key, required this.groupKey}) : super(key: key);
 
   @override
@@ -28,14 +29,47 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
   }
 }
 
-class _BodyTaskFormWidget extends StatelessWidget {
+class _BodyTaskFormWidget extends StatefulWidget {
   const _BodyTaskFormWidget({Key? key}) : super(key: key);
 
+  @override
+  State<_BodyTaskFormWidget> createState() => _BodyTaskFormWidgetState();
+}
+
+class _BodyTaskFormWidgetState extends State<_BodyTaskFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Новая задача'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  context
+                      .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                      .model
+                      .changeThemeOfApp();
+                });
+              },
+              icon: Icon(
+                context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Icons.nights_stay_outlined
+                    : Icons.light,
+                color: context
+                            .dependOnInheritedWidgetOfExactType<MainProvider>()!
+                            .model
+                            .themeOfApp ==
+                        ThemeData.light()
+                    ? Colors.black
+                    : Colors.white,
+              )),
+        ],
+        title: const Text('Группы'),
+        centerTitle: true,
       ),
       body: const Center(
         child: Padding(
