@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+final _box = Hive.box('theme');
+
+ThemeData getThemeFromHive() {
+  print('initial Value in theme ${_box.get('theme')}');
+
+  if (_box.isEmpty) {
+    _box.put('theme', 'dark');
+    return ThemeData.dark();
+  }
+
+  switch (_box.get('theme')) {
+    case 'dark':
+      return ThemeData.dark();
+    case 'ligth':
+      return ThemeData.light();
+    default:
+      return ThemeData();
+  }
+}
 
 class MainModel extends ChangeNotifier {
-  ThemeData themeOfApp = ThemeData.light();
+  ThemeData themeOfApp = getThemeFromHive();
+
   void changeThemeOfApp() {
-    themeOfApp == ThemeData.dark()
-        ? themeOfApp = ThemeData.light()
-        : themeOfApp = ThemeData.dark();
+    _box.get('theme') == 'dark'
+        ? _box.put('theme', 'light')
+        : _box.put('theme', 'dark');
+
+    _box.get('theme') == 'dark'
+        ? themeOfApp = ThemeData.dark()
+        : themeOfApp = ThemeData.light();
 
     notifyListeners();
   }

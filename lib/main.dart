@@ -6,6 +6,7 @@ import 'package:todolist/ui/navigation/main_navigation.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await Hive.openBox('theme');
   runApp(const MyApp());
 }
 

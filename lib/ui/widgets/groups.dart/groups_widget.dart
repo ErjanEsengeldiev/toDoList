@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todolist/main_model.dart';
-import 'package:todolist/ui/widgets/groups.dart/widgets/navigation_drawer_widget.dart';
 import 'groups_model_widget.dart';
 
 class Groups extends StatefulWidget {
